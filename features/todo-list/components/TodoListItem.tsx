@@ -1,11 +1,11 @@
-import { faMugSaucer } from "@fortawesome/free-solid-svg-icons/faMugSaucer";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { FC } from "react";
-import { Alert, Text } from "react-native";
+import { Alert, Pressable, Switch, Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { TodoItem } from "../../../types";
-import { removeTodo } from "../todoSlice";
-import { ItemView, RemoveButton } from "./styled";
+import { removeTodo, toggleTodo } from "../todoSlice";
+import { ItemActions, ItemView } from "./styled";
 
 type Props = {
   todoItem: TodoItem;
@@ -26,11 +26,23 @@ const TodoListItem: FC<Props> = ({ todoItem }) => {
       ],
       { cancelable: true }
     );
+  const toggleSwitch = () => {
+    dispatch(toggleTodo(todoItem.id));
+  };
   return (
     <ItemView>
       <Text>{todoItem.text}</Text>
-      <FontAwesomeIcon icon={faMugSaucer} />
-      <RemoveButton color="#000000" onPress={createConfirmation} title="X" />
+      <ItemActions>
+        <Switch
+          trackColor={{ false: "gray", true: "black" }}
+          thumbColor="#f4f3f4"
+          onValueChange={toggleSwitch}
+          value={todoItem.checked}
+        />
+        <Pressable onPress={createConfirmation}>
+          <FontAwesomeIcon size={20} icon={faTrash} />
+        </Pressable>
+      </ItemActions>
     </ItemView>
   );
 };

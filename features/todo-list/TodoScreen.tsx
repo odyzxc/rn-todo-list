@@ -1,13 +1,13 @@
-import { View } from "react-native";
 import AddTodoForm from "./components/AddTodoForm";
 import TodoList from "./components/TodoList";
+import { Container } from "./styled";
 
 const TodoScreen = () => {
   return (
-    <View>
+    <Container>
       <TodoList />
       <AddTodoForm />
-    </View>
+    </Container>
   );
 };
 
